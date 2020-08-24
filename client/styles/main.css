@@ -1,7 +1,21 @@
 body {
+  background: linear-gradient(90deg, rgb(255, 240, 212) 10%, rgb(183, 131, 71) 65%);
   font-family: "Helvetica Neue", sans-serif;
   margin: 0;
   padding: 0;
+}
+.title-board{
+  width: 100%;
+  height: 130px;
+  object-position: center;
+}
+h1 {
+  text-align: center;
+  z-index: 3;
+  margin-top: -95px;
+  font-family: fantasy;
+  color: #e8ceb4;
+  text-shadow: 2px 2px #000000
 }
 
 input {
@@ -30,9 +44,8 @@ button:hover {
 }
 
 button.turn {
-  color: rgb(255, 64, 129);
-  background-color: white;
-  box-shadow:none;
+  background-color: #eebd79;
+  box-shadow: 5px 5px 2px 2px #48330e8f;
 }
 
 button.turn:hover {
@@ -40,7 +53,6 @@ button.turn:hover {
 }
 
 .rps-wrapper {
-  background-color: rgb(255, 255, 255);
   width: 100%;
   min-height: 500px;
   margin: 20px auto;
@@ -56,29 +68,9 @@ button.turn:hover {
   padding: 0;
   border-bottom: 1px solid lightgrey;
   overflow-y: scroll;
-}
-
-#events li {
-  padding: 10px 10px 10px 10px;
-}
-
-.chat-wrapper {
-  padding: 10px;
-}
-
-.chat-wrapper form {
-  display: flex;
-}
-
-.chat-wrapper form input {
-  font-size: 1.0rem;
-  margin: 0 10px 0 0;
-  padding: 0 5px;
-  flex-grow: 1;
-}
-
-.chat-wrapper form button {
-  width: 80px;
+  background-color: #160601c4;
+  color: #ffffff;
+  padding: 1rem;
 }
 
 .button-wrapper {

@@ -24,21 +24,24 @@ class RpsGame {
     });
   }
 
+  _setRound(number) {
+    this._players.forEach((player) => {
+      player.emit('round', number);
+    });
+  }
+
   _onTurn(playerIndex, turn) {
     this._turns[playerIndex] = turn;
     this._sendToPlayer(playerIndex, `You selected ${turn}`);
-
     this._checkGameOver();
   }
 
   _checkGameOver() {
     const turns = this._turns;
-
     if (turns[0] && turns[1]) {
-      this._sendToPlayers('Game over ' + turns.join(' : '));
+      //this._sendToPlayers('Game over ' + turns.join(' : '));
       this._getGameResult();
       this._turns = [null, null];
-      this._sendToPlayers('Next Round!!!!');
     }
   }
 
@@ -46,7 +49,6 @@ class RpsGame {
 
     const p0 = this._decodeTurn(this._turns[0]);
     const p1 = this._decodeTurn(this._turns[1]);
-
     const distance = (p1 - p0 + 3) % 3;
 
     switch (distance) {
@@ -55,18 +57,25 @@ class RpsGame {
         break;
 
       case 1:
-        this._sendWinMessage(this._players[0], this._players[1]);
+        this._sendWinMessage(this._players[0], this._players[1]); //win player 0
         break;
 
       case 2:
-        this._sendWinMessage(this._players[1], this._players[0]);
+        this._sendWinMessage(this._players[1], this._players[0]); //win player 1
         break;
     }
   }
 
   _sendWinMessage(winner, loser) {
     winner.emit('message', 'You won!');
-    loser.emit('message', 'You lost.');
+    winner.emit('yourScore', 1);
+    winner.emit('opponentScore', 0);
+
+    loser.emit('message', 'You lost!.');
+    loser.emit('yourScore', 0);
+    loser.emit('opponentScore', 1);
+
+    this._setRound(1);
   }
 
   _decodeTurn(turn) {
