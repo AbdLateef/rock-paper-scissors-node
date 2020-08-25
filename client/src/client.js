@@ -1,4 +1,7 @@
 var myChoice = null;
+var timeout = false;
+var start = false;
+var interval = null;
 
 const writeEvent = (text) => {
   const event = document.querySelector('#events');
@@ -44,6 +47,7 @@ const writeRound = (round) => {
   if(currentRound < 5){
     document.querySelector('#round').innerText = nextRound;
   }else{
+    clearInterval(interval);
     document.querySelector('#round').innerText = 'Round Completed';
     document.querySelectorAll('.turn').forEach(elem => {
       elem.disabled = true;
@@ -59,25 +63,43 @@ const writeRound = (round) => {
   
 };
 
-const addButtonListeners = () => {
+const randomChoice = (id) => {
   var hand = document.getElementById('hand').children;
-  ['rock', 'paper', 'scissors'].forEach((id) => {
-    const button = document.getElementById(id);
-    button.addEventListener('click', () => {
-      for (i = 0; i < hand.length; i++) {
-        hand[i].style.display = "none";
-      }
-      if(id == 'rock') {
-        document.querySelector('#hand-rock').style.display = 'block';  
-      } else if(id == 'paper') {
-        document.querySelector('#hand-paper').style.display = 'block';  
-      } else if(id == 'scissors') {
-        document.querySelector('#hand-scissors').style.display = 'block';  
-      }
-      sock.emit('turn', id);
-      myChoice = id;
+  for (i = 0; i < hand.length; i++) {
+    hand[i].style.display = "none";
+  }
+  if(id == 'rock') {
+    document.querySelector('#hand-rock').style.display = 'block';  
+  } else if(id == 'paper') {
+    document.querySelector('#hand-paper').style.display = 'block';  
+  } else if(id == 'scissors') {
+    document.querySelector('#hand-scissors').style.display = 'block';  
+  }
+}
+
+
+const addButtonListeners = () => {
+  if(!timeout){
+    var hand = document.getElementById('hand').children;
+    ['rock', 'paper', 'scissors'].forEach((id) => {
+      const button = document.getElementById(id);
+      button.addEventListener('click', () => {
+        for (i = 0; i < hand.length; i++) {
+          hand[i].style.display = "none";
+        }
+        if(id == 'rock') {
+          document.querySelector('#hand-rock').style.display = 'block';  
+        } else if(id == 'paper') {
+          document.querySelector('#hand-paper').style.display = 'block';  
+        } else if(id == 'scissors') {
+          document.querySelector('#hand-scissors').style.display = 'block';  
+        }
+        sock.emit('turn', id);
+        myChoice = id;
+      });
     });
-  });
+  }
+  
 };
 
 writeEvent('Rock Paper Scissors');
@@ -89,5 +111,17 @@ sock.on('opponentScore', writeOpponentScore);
 sock.on('round', writeRound);
 sock.on('turns', writeOpponentChoice);
 sock.on('opponentCome', oppCome);
+sock.on('startStatus', (startStatus) => {
+  start = startStatus;
+  interval = setInterval(() => {
+    timeout = true;
+    const arr = ['rock', 'paper', 'scissors'];
+    const random = Math.floor(Math.random() * arr.length);
+    console.log(random, arr[random]);
+    sock.emit('turn', arr[random]);
+    myChoice = arr[random];
+    randomChoice(arr[random]);
+  }, 5000, timeout);
+});
 
 addButtonListeners();

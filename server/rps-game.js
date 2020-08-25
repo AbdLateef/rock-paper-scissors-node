@@ -7,10 +7,17 @@ class RpsGame {
 
     this._sendToPlayers('Rock Paper Scissors Starts!');
     this._opponentCome();
+    this._gameStartStatus();
     this._players.forEach((player, idx) => {
       player.on('turn', (turn) => {
         this._onTurn(idx, turn);
       });
+    });
+  }
+
+  _gameStartStatus(){
+    this._players.forEach((player) => {
+      player.emit('startStatus', true);
     });
   }
 
