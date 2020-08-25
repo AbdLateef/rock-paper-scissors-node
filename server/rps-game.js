@@ -6,12 +6,18 @@ class RpsGame {
     this._turns = [null, null];
 
     this._sendToPlayers('Rock Paper Scissors Starts!');
-
+    this._opponentCome();
     this._players.forEach((player, idx) => {
       player.on('turn', (turn) => {
         this._onTurn(idx, turn);
       });
     });
+  }
+
+  _opponentCome() {
+    this._players.forEach((player) => {
+      player.emit('opponentCome', true);
+    });  
   }
 
   _sendToPlayer(playerIndex, msg) {
@@ -24,6 +30,12 @@ class RpsGame {
     });
   }
 
+  _tellOpponentChoice(turn) {
+    this._players.forEach((player) => {
+      player.emit('turns', turn);
+    });
+  }
+  
   _setRound(number) {
     this._players.forEach((player) => {
       player.emit('round', number);
@@ -33,20 +45,20 @@ class RpsGame {
   _onTurn(playerIndex, turn) {
     this._turns[playerIndex] = turn;
     this._sendToPlayer(playerIndex, `You selected ${turn}`);
-    this._checkGameOver();
+    this._checkGameOver(turn);
   }
 
-  _checkGameOver() {
+  _checkGameOver(myTurn) {
     const turns = this._turns;
     if (turns[0] && turns[1]) {
-      //this._sendToPlayers('Game over ' + turns.join(' : '));
+      this._tellOpponentChoice(turns);
+      //this._sendToPlayers('Game over ' + turns.join(' : ')); // nanti coba pake ini masukin ke array trus filternya di client
       this._getGameResult();
       this._turns = [null, null];
     }
   }
 
   _getGameResult() {
-
     const p0 = this._decodeTurn(this._turns[0]);
     const p1 = this._decodeTurn(this._turns[1]);
     const distance = (p1 - p0 + 3) % 3;

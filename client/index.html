@@ -28,7 +28,6 @@
         <div class="players-wrapper" style="flex-direction: row; display: flex;">
           <div class="players-one-wrapper" style="width: 50%;">
             <div class="duck">
-              <!-- <duck-component></duck-component> -->
               <div class="head">
                   <div class="eye">
                       <div class="eye-ball">
@@ -52,16 +51,46 @@
                   <div class="left-hand"></div>
               </div>
               <div id="hand" class="right-hand">
-                  <i id="hand-paper" class='fas fa-hand-paper' style='font-size:60px;color:#71d4ed; transform: rotate(70deg); display: none'></i>
-                  <i id="hand-rock" class='fas fa-hand-rock' style='font-size:60px;color:#71d4ed; transform: rotate(70deg);display: none'></i>
-                  <i id="hand-scissors" class='fas fa-hand-scissors' style='font-size:60px;color:#71d4ed; transform: scaleX(-1); display: none'></i>
+                  <i id="hand-paper" class='fas fa-hand-paper' style='font-size:70px;color:#71d4ed; transform: rotate(90deg); display: none'></i>
+                  <i id="hand-rock" class='fas fa-hand-rock' style='font-size:70px;color:#71d4ed; transform: rotate(90deg);display: none'></i>
+                  <i id="hand-scissors" class='fas fa-hand-scissors' style='font-size:70px;color:#71d4ed; transform: scaleX(-1); display: none'></i>
               </div>
               <div class="left-foot"></div>
               <div class="right-foot"></div>
             </div>
           </div>
           <div class="players-two-wrapper" style="width: 50%;">
-            opponent here
+            <div class="duck-opponent" style="transform: scaleX(-1); display: none;">
+              <div class="head">
+                  <div class="eye">
+                      <div class="eye-ball">
+                          <div class="eye-inner-ball"></div>
+                          <div class="eye-inner-black"></div>
+                      </div>
+                  </div>
+                  <div class="beak-upper"></div>
+                  <div class="beak-lower"></div>
+                  <div class="face"></div>
+              </div>
+              <div class="back-wing">
+                  <div class="tail-right"></div>
+                  <div class="tail-left"></div>
+              </div>
+              <div class="body">
+                  <div class="front-wing">
+                      <div class="front-wing-left"></div>
+                      <div class="front-wing-right"></div>
+                  </div>
+                  <div class="left-hand"></div>
+              </div>
+              <div id="opponent-hand" class="right-hand">
+                  <i id="opponent-hand-paper" class='fas fa-hand-paper' style='font-size:70px;color:#71d4ed; transform: rotate(90deg); display: none'></i>
+                  <i id="opponent-hand-rock" class='fas fa-hand-rock' style='font-size:70px;color:#71d4ed; transform: rotate(90deg);display: none'></i>
+                  <i id="opponent-hand-scissors" class='fas fa-hand-scissors' style='font-size:70px;color:#71d4ed; transform: scaleX(-1); display: none'></i>
+              </div>
+              <div class="left-foot"></div>
+              <div class="right-foot"></div>
+            </div>
           </div>
         </div>
 
@@ -103,6 +132,14 @@
       width: 200px;
       height: 300px;
       margin-left: 50px;
+      margin-top: 20px;
+    }
+
+    .duck-opponent{
+      width: 200px;
+      height: 300px;
+      float: right;
+      margin-right: 50px;
       margin-top: 20px;
     }
 
@@ -274,7 +311,7 @@
     }
 
     .right-hand{
-      margin-left: 148px;
+      margin-left: 140px;
       margin-top: 128px;
       position: absolute;
     }
